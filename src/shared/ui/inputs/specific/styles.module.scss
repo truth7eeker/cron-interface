@@ -1,0 +1,8 @@
+.options {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1em;
+    padding-left: 1.5em;
+    
+}
