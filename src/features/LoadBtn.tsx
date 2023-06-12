@@ -7,9 +7,9 @@ export function LoadBtn() {
    const { fieldset } = useSelector((state: RootState) => state);
    const dispatch = useDispatch();
    const handleLoad = () => {
-      if(isEmpty(fieldset)) {
-        return
-      }
+      // if(isEmpty(fieldset)) {
+      //   return
+      // }
       dispatch(addCurrent({fieldset}));
    };
    return <button onClick={handleLoad}>Load</button>;
