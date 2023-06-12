@@ -129,16 +129,9 @@ const fieldsetSlice = createSlice({
             targetField.specific.push(value);
          }
       },
-      addDefaults(state, { payload }) {
-         Object.keys(state).map((key) => {
-            const field = state[key as keyof typeof state];
-            const isPeriodic = field.input === 'periodic' && !field.periodic;
-            const isRange = field.input === 'range' && !field.range.from && !field.range.to;
-         });
-      },
    },
 });
 
-export const { setField, addFieldValues, addSpecific, addDefaults } = fieldsetSlice.actions;
+export const { setField, addFieldValues, addSpecific } = fieldsetSlice.actions;
 
 export default fieldsetSlice.reducer;
