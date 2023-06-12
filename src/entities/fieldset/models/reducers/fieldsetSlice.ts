@@ -5,21 +5,21 @@ export interface IState {
       input: string;
       periodic: string;
       every: string;
-      specific: Array<string>;
+      specific: Array<any>;
       range: { from: string; to: string };
    };
    hour: {
       input: string;
       periodic: string;
       every: string;
-      specific: Array<string>;
+      specific: Array<any>;
       range: { from: string; to: string };
    };
    dayOfMonth: {
       input: string;
       periodic: string;
       every: string;
-      specific: Array<string>;
+      specific: Array<any>;
       range: { from: string; to: string };
    };
    dayOfWeek: {
@@ -32,8 +32,8 @@ export interface IState {
    month: {
       input: string;
       periodic: string;
-      every: string ;
-      specific: Array<string>;
+      every: string;
+      specific: Array<any>;
       range: { from: ''; to: '' };
    };
 }
@@ -113,21 +113,29 @@ const fieldsetSlice = createSlice({
             targetField.range[rangePoint as keyof typeof targetField.range] = value;
          } else if (type === 'periodic') {
             targetField.periodic = value;
-         } 
+         }
       },
       addSpecific(state, { payload }) {
-         const { name, value } = payload;
+         const { name, value, checked } = payload;
          const targetField = state[name as keyof typeof state];
-         targetField.specific.push(value);
+         if (!checked) {
+            targetField.specific.map((item) => {
+               if (item === value) {
+                  const target = targetField.specific.indexOf(item);
+                  targetField.specific.splice(target, 1);
+               }
+            });
+         } else {
+            targetField.specific.push(value);
+         }
       },
-      addDefaults(state, {payload}) {
-         Object.keys(state).map(key => {
-            const field = state[key as keyof typeof state]
-            const isPeriodic = field.input === 'periodic' && !field.periodic
-            const isRange = field.input === 'range' && !field.range.from && !field.range.to
-            
-         })
-      }
+      addDefaults(state, { payload }) {
+         Object.keys(state).map((key) => {
+            const field = state[key as keyof typeof state];
+            const isPeriodic = field.input === 'periodic' && !field.periodic;
+            const isRange = field.input === 'range' && !field.range.from && !field.range.to;
+         });
+      },
    },
 });
 

@@ -1,7 +1,6 @@
-import { useDispatch } from 'react-redux';
 import Checkbox from '../checkbox';
 import styles from './styles.module.scss'
-import { addSpecific } from '../../../../entities';
+
 
 interface IProps {
    inputname: string;
@@ -12,11 +11,7 @@ interface IProps {
 }
 
 export function Specific({ inputname, label, data, field, handleChange }: IProps) {
-   const dispatch = useDispatch()
-   const handleCheckbox = (e:any) => {
-      const {checked, name, value} = e.target
-      dispatch(addSpecific({checked, name, value}))
-   };
+  
    return (
       <div>
          <input
@@ -30,7 +25,7 @@ export function Specific({ inputname, label, data, field, handleChange }: IProps
          <label htmlFor="contactChoice1">Specific {label}(s):</label>
          <div className={styles.options} style={{ display: field.input === 'specific' ? 'grid' : 'none' }}>
             {data.map((num) => (
-               <Checkbox inputname={inputname} num={num} key={num.toString()} handleCheckbox={handleCheckbox}/>
+               <Checkbox inputname={inputname} num={num} key={num.toString()} />
             ))}
          </div>
       </div>

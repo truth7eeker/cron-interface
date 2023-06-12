@@ -48,7 +48,7 @@ const cronSlice = createSlice({
             }
 
 
-            if (!field.value) {
+            if (!field.value || (!field.value.length && field.input === 'specific')) {
                result += '*    ';
             } else if (field.value === '?') {
                result += '?    ';
