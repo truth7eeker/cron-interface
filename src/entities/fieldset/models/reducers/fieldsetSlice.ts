@@ -129,9 +129,37 @@ const fieldsetSlice = createSlice({
             targetField.specific.push(value);
          }
       },
+      parseCron(state, { payload }) {
+         const cronInput = payload.split(' ').filter((value:string) => value !== '');
+         const times = ['minute', 'hour', 'dayOfMonth', 'month', 'dayOfWeek'];
+         times.forEach((val: string, index: number) =>
+            cronInput.map((item: string, i: number) => {
+               const isSameIndex = index === i
+               if (item === '*' && isSameIndex) {
+                  state[val as keyof typeof state].input = 'every';
+                  state[val as keyof typeof state].every = item;
+               } else if (item.includes('/') && isSameIndex) {
+                  state[val as keyof typeof state].input = 'periodic';
+                  state[val as keyof typeof state].periodic = item.split('/')[1];
+               } else if (item.includes('-') && isSameIndex) {
+                  const [first, second] = item.split('-');
+                  state[val as keyof typeof state].input = 'range';
+                  state[val as keyof typeof state].range = { from: first, to: second };
+               } else if (item.includes(',') && isSameIndex) {
+                  const res = item.split(',') 
+                  const noDublicates = [...new Set(res)]
+                  state[val as keyof typeof state].input = 'specific';
+                  state[val as keyof typeof state].specific = noDublicates
+               } else if (item.length < 3 && item.length > 0 && isSameIndex) {
+                  state[val as keyof typeof state].input = 'specific';
+                  state[val as keyof typeof state].specific.push(item);
+               }
+            }),
+         );
+      },
    },
 });
 
-export const { setField, addFieldValues, addSpecific } = fieldsetSlice.actions;
+export const { setField, addFieldValues, addSpecific, parseCron } = fieldsetSlice.actions;
 
 export default fieldsetSlice.reducer;

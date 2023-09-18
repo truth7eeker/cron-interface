@@ -8,7 +8,7 @@ interface IProps {
    inputname: string;
    label: string;
    data: Array<Number | String> | Array<String>;
-   field: string;
+   fieldName: string;
    selectedVal: String | Number
 }
 
@@ -20,8 +20,8 @@ export function Fieldset(data: IProps) {
    const field = fieldset[data.inputname as keyof typeof fieldset];
 
    const handleChange = (e: any) => {
-      const { value, name, checked } = e.target;
-      dispatch(setField({ name, value, checked}));
+      const { value, name } = e.target;
+      dispatch(setField({ name, value }));
       
    };
 
@@ -35,7 +35,7 @@ export function Fieldset(data: IProps) {
    return (
       <div style={{display: cron.currentField === data.inputname ? 'flex': 'none'}} className={styles.wrapper}>
          <fieldset>
-            <legend>{data.field}</legend>
+            <legend>{data.fieldName}</legend>
             <Every {...updatedData} />
             <Periodic {...updatedData} />
             <Range {...updatedData} />

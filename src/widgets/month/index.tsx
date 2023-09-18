@@ -9,7 +9,7 @@ export function Month() {
       label: 'month',
       data: allowedValues,
       selectedVal: allowedValues[0],
-      field: 'Month',
+      fieldName: 'Month',
    };
 
    return (

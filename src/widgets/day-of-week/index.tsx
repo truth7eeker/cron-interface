@@ -8,7 +8,7 @@ export function DayOfWeek() {
       label: 'day',
       data: allowedValues,
       selectedVal: allowedValues[0],
-      field: 'Day of week',
+      fieldName: 'Day of week',
    };
    return (
       <div>

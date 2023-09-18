@@ -10,6 +10,7 @@ interface IProps {
 }
 
 export function Range({ inputname, label, data, field, handleChange, handleSelect }: IProps) {
+
    return (
       <div>
          <input

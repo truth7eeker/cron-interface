@@ -12,7 +12,7 @@ export function Minutes() {
       label: 'minute',
       data: allowedValues,
       selectedVal: allowedValues[0],
-      field: 'Minute',
+      fieldName: 'Minute',
    };
  
    return (

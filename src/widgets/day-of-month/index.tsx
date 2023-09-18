@@ -11,7 +11,7 @@ export function DayOfMonth() {
       inputname: 'dayOfMonth',
       label: 'day',
       data: allowedValues,
-      field: 'Day of month',
+      fieldName: 'Day of month',
       selectedVal: allowedValues[0],
    };
    return (

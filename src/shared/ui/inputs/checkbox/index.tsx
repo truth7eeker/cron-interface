@@ -1,23 +1,25 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addSpecific } from '../../../../entities';
+import { RootState } from '../../../../app/store/store';
+import { setMode } from '../../../../features/models/reducers';
 
 interface IProps {
    inputname: string;
    num: Number | String;
+   specific: Array<Number | any>;
 }
 
-function Checkbox({ inputname, num }: IProps) {
-   const [isChecked, setIsChecked] = useState(false);
- 
-   const dispatch = useDispatch()
+function Checkbox({ inputname, num, specific}: IProps) {
+   const dispatch = useDispatch();
 
    const handleCheckbox = (e: any) => {
-      const {  name, value, checked } = e.target;
-      setIsChecked(!isChecked)
+      const { name, value, checked } = e.target;
+      dispatch(setMode('load'));
       dispatch(addSpecific({ name, value, checked }));
    };
 
+ 
    return (
       <div style={{ display: num === '' ? 'none' : 'inline' }}>
          <input
@@ -26,7 +28,7 @@ function Checkbox({ inputname, num }: IProps) {
             name={inputname}
             value={num.toString()}
             onChange={(e) => handleCheckbox(e)}
-            checked={isChecked}
+            checked={specific.some(val => val == num)}
          />
          <label htmlFor="checkbox">{num.toString()}</label>
       </div>

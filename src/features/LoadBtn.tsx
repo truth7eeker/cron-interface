@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store/store';
-import { addCurrent } from './models/reducers';
-import { isEmpty } from './lib';
+import { addCurrent, setMode } from './models/reducers';
+
 
 export function LoadBtn() {
    const { fieldset } = useSelector((state: RootState) => state);
    const dispatch = useDispatch();
    const handleLoad = () => {
-      // if(isEmpty(fieldset)) {
-      //   return
-      // }
       dispatch(addCurrent({fieldset}));
+      dispatch(setMode('load'))
    };
    return <button onClick={handleLoad}>Load</button>;
 }

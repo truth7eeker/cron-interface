@@ -12,7 +12,7 @@ export function Hours() {
       label: 'hour',
       data: allowedValues,
       selectedVal: allowedValues[0],
-      field: 'Hour',
+      fieldName: 'Hour',
    };
    return (
       <div>

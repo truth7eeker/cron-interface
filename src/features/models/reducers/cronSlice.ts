@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IState {
-   currentField: string,
+   currentField: string;
    current: string;
-   list: Array<any>;
+   mode: string
 }
 
 const initialState: IState = {
+   mode: 'load',
    currentField: 'minute',
    current: '',
-   list: [],
 };
 
 const cronSlice = createSlice({
@@ -31,7 +31,9 @@ const cronSlice = createSlice({
             fields.push({ type, input, value });
          });
 
-         const isRangeRmpty = fields.some(field => field.input === 'range' && (!field.value.from || !field.value.to))
+         const isRangeRmpty = fields.some(
+            (field) => field.input === 'range' && (!field.value.from || !field.value.to),
+         );
 
          if (isRangeRmpty) {
             return;
@@ -41,41 +43,46 @@ const cronSlice = createSlice({
             const isDayOfMonth = Object.keys(fieldset.dayOfMonth).some(
                (key) => key !== 'input' && key !== '',
             );
+            const isDayOfWeek = Object.keys(fieldset.dayOfWeek).some(
+               (key) => key !== 'input' && key !== '',
+            );
 
             // handle "?" between dayOfWeek and dayOfMonth
             if (isDayOfMonth && field.type === 'dayOfWeek') {
                field.value = '?';
             }
 
-
             if (!field.value || (!field.value.length && field.input === 'specific')) {
-               result += '*    ';
+               result += '*  ';
             } else if (field.value === '?') {
-               result += '?    ';
+               result += '?  ';
             } else if (field.input === 'every') {
-               result += `${field.value}    `;
+               result += `${field.value}  `;
             } else if (field.input === 'periodic') {
-               result += `*/${field.value}    `;
+               result += `*/${field.value}  `;
             } else if (field.input === 'range') {
-               result += `${field.value.from}-${field.value.to}    `;
+               result += `${field.value.from}-${field.value.to}  `;
             } else if (field.input === 'specific') {
-               result += field.value.join(',') + '    ';
+               result += field.value.join(',') + '  ';
             }
          });
 
          state.current = result.trim();
       },
-      addToList(state) {
-         if (!state.current) return;
-         state.list.push(state.current);
-         state.current = '';
+
+      saveCron(state, { payload }) {
+         state.current = payload
       },
-      switchField(state, {payload}) {
-         state.currentField = payload.id
+
+      switchField(state, { payload }) {
+         state.currentField = payload.id;
+      },
+      setMode(state, {payload}) {
+         state.mode = payload
       }
    },
 });
 
-export const { addCurrent, addToList, switchField } = cronSlice.actions;
+export const { addCurrent, switchField, saveCron, setMode } = cronSlice.actions;
 
 export default cronSlice.reducer;

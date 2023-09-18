@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import { DayOfMonth, DayOfWeek, Hours, Minutes, Month, SwitchBtns } from '../../widgets';
 import { LoadBtn, SaveBtn } from '../../features';
-import { CronString, CronTable } from '../../entities';
+import { Result } from '../../entities';
 
 export function Schedule() {
    return (
@@ -19,8 +19,8 @@ export function Schedule() {
             <LoadBtn />
             <SaveBtn />
          </div>
-         <CronString />
-         <CronTable />
+         <Result />
+
       </div>
    );
 }
