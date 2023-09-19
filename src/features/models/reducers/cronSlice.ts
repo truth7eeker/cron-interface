@@ -43,9 +43,6 @@ const cronSlice = createSlice({
             const isDayOfMonth = Object.keys(fieldset.dayOfMonth).some(
                (key) => key !== 'input' && key !== '',
             );
-            const isDayOfWeek = Object.keys(fieldset.dayOfWeek).some(
-               (key) => key !== 'input' && key !== '',
-            );
 
             // handle "?" between dayOfWeek and dayOfMonth
             if (isDayOfMonth && field.type === 'dayOfWeek') {

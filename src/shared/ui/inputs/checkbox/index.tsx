@@ -19,7 +19,7 @@ function Checkbox({ inputname, num, specific}: IProps) {
       dispatch(addSpecific({ name, value, checked }));
    };
 
- 
+
    return (
       <div style={{ display: num === '' ? 'none' : 'inline' }}>
          <input
@@ -28,7 +28,7 @@ function Checkbox({ inputname, num, specific}: IProps) {
             name={inputname}
             value={num.toString()}
             onChange={(e) => handleCheckbox(e)}
-            checked={specific.some(val => val == num)}
+            checked={specific.some(val => val == num.toString())}
          />
          <label htmlFor="checkbox">{num.toString()}</label>
       </div>

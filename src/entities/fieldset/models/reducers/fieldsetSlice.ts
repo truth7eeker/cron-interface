@@ -120,7 +120,7 @@ const fieldsetSlice = createSlice({
          const targetField = state[name as keyof typeof state];
          if (!checked) {
             targetField.specific.map((item) => {
-               if (item === value) {
+               if (item == value) {
                   const target = targetField.specific.indexOf(item);
                   targetField.specific.splice(target, 1);
                }
@@ -130,11 +130,12 @@ const fieldsetSlice = createSlice({
          }
       },
       parseCron(state, { payload }) {
-         const cronInput = payload.split(' ').filter((value:string) => value !== '');
+         const cronInput = payload.split(' ').filter((value: string) => value !== '');
+         console.log(cronInput);
          const times = ['minute', 'hour', 'dayOfMonth', 'month', 'dayOfWeek'];
          times.forEach((val: string, index: number) =>
             cronInput.map((item: string, i: number) => {
-               const isSameIndex = index === i
+               const isSameIndex = index === i;
                if (item === '*' && isSameIndex) {
                   state[val as keyof typeof state].input = 'every';
                   state[val as keyof typeof state].every = item;
@@ -146,12 +147,13 @@ const fieldsetSlice = createSlice({
                   state[val as keyof typeof state].input = 'range';
                   state[val as keyof typeof state].range = { from: first, to: second };
                } else if (item.includes(',') && isSameIndex) {
-                  const res = item.split(',') 
-                  const noDublicates = [...new Set(res)]
+                  const res = item.split(',');
+                  const noDublicates = [...new Set(res)];
                   state[val as keyof typeof state].input = 'specific';
-                  state[val as keyof typeof state].specific = noDublicates
-               } else if (item.length < 3 && item.length > 0 && isSameIndex) {
+                  state[val as keyof typeof state].specific = noDublicates;
+               } else if (isSameIndex) {
                   state[val as keyof typeof state].input = 'specific';
+                  state[val as keyof typeof state].specific = [];
                   state[val as keyof typeof state].specific.push(item);
                }
             }),
